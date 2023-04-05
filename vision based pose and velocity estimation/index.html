@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="width=device-width, initial-scale=1">
-    <meta name="description" content="LoFTR can extract high-quality semi-dense matches even in indistinctive regions with low-textures, motion blur, or repetitive patterns. Accepted in CVPR 2021."/>
-    <title>Vision based Pose and Velocity Estimation of Microaerial Vehicle</title>
+    <meta name="description" content="A fast feature based image stitching algorithm developed in Python"/>
+    <title>Optimized Image Stitching in Python</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
@@ -25,13 +25,12 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h2>LoFTR in Tensorflow: Detector-Free Local Feature Matching with Transformers Re-implemented into Tensorflow</h2>
-            <h4 style="color:#6e6e6e;"> Robot Perception (ROB-GY 6203) Fall 2022  </h4>
+            <h2>Optimized Image Stitching in Python</h2>
+            <!-- <h4 style="color:#6e6e6e;"> Robot Perception (ROB-GY 6203) Fall 2022  </h4> -->
             <hr>
-            <h6>  <a href="https://github.com/fsa4859" target="_blank">Fady Algyar</a><sup>1*</sup>, 
+            <h6> <a href="https://rohang9929.github.io" target="_blank">Rohan Gangakhedkar</a><sup>1</sup>, 
+                 
             <p> <sup>1</sup>New York Univeristy &nbsp;&nbsp; 
-                <br>
-                <sup>*</sup> denotes equal contribution
             </p>
             <!-- <p> <a class="btn btn-secondary btn-lg" href="" role="button">Paper</a> 
                 <a class="btn btn-secondary btn-lg" href="" role="button">Code</a> 
@@ -43,7 +42,7 @@
                     <i class="fa fa-file"></i> Paper</a> </p>
               </div> -->
               <div class="column">
-                  <p class="mb-5"><a class="btn btn-large btn-light" id="code_soon" href="https://github.com/RohanG9929/LoFTR-in-Tensorflow" role="button" 
+                  <p class="mb-5"><a class="btn btn-large btn-light" id="code_soon" href="https://github.com/RohanG9929/Optimized-Image-Stitching" role="button" 
                     target="_blank" disabled=1>
                 <i class="fa fa-github-alt"></i> Code </a> </p>
               </div>
@@ -71,54 +70,86 @@
           <h3>Abstract</h3>
             <hr style="margin-top:0px">
             <h6 style="color:#8899a5" class="text-center"> 
-              TL;DR: LoFTR can extract high-quality semi-dense matches even in indistinctive regions with low-textures, motion blur, or repetitive patterns. Because of it's robustness and superiorirty over other neural network methods a re-implmentation into Tensorflow was achieved. This is to further expand the userbase and reach of the LoFTR algorithm.
+              TL;DR: This image stitching algorithm utilizes feature matches between images to compute an homography matrix. 
+              Using this homography the second image is warped, and then the two images are layed on top of one another. 
+              Then, dynamic weighted fusion is used to remove the seam line caused by the pasting of the images onto one another. 
+              The result is a stitched image with little to no seam line present.
             </h6>
               <br>
-              <img class="img-fluid" src="images/TF_md.png" alt="LoFTR in Tensorflow Matches">
+              <img class="img-fluid" src="images/labLeft.jpg" alt="Left Image" width="30%" height="30%">
+              <img class="img-fluid" src="images/labRight.jpg" alt="Right Image" width="30%" height="30%">
             <div>
               <br>
           <p class="text-justify">
-            This project proposed a reimplementation of the LoFTR Algorithm, the current state-of-the-art method for detecting feature matches between images using Deep Neural Networks. Originally published in PyTorch, a common research library, this project re implements the complex architecture of the model into TensorFlow, a framework most commonly used in industry.
-            Although time contraints meant a full training could not be completed, the outcomes show that this implementation functions as expected and with a trianing sample more aligned with the original paper, the results would also align better.
+            Above is the two original images taken side by side. And below is the stitched result. As you can see
+            there is little to no seam line present from the image and the alignment is as it should be.
           </p>
+          <br>
+          <img class="img-fluid" src="images/stiched.jpg" alt="Right Image" width="50%" height="50%">
+
         </div>
       </div>
     </div>
   </section>
   <br>
 
-  <!-- overview video -->
+
+  <!-- pipeline -->
   <section>
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-            <h3>Presentation video (5 min)</h3>
+            <h3>Pipeline overview</h3>
             <hr style="margin-top:0px">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe style="clip-path: inset(1px 1px)" width="100%" height="100%" src="https://www.youtube.com/embed/Gs9Jz6svLko" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-            </div>
+                <!-- <img class="img-fluid" src="images/loftr-arch.png" alt="LoFTR Architechture"> -->
+            <!-- <hr> -->
+            <p class="text-justify">
+              The pipeline of the image stitching consists of  main parts.
+
+              The first is converting the images to grayscale so that SIFT can extract matches.
+              <br>
+            </p>
+              <img  class="img-fluid" src="images/left-bw.png" alt="Left (Grayscale)" width="30%"> 
+              &nbsp;
+              <img class="img-fluid" src="images/right-bw.png" alt="Right (Grayscale)" width="30%">
+            <p class="text-justify">
+              <br><br>
+              After extracting matches OpenCV's FlannBasedMatcher is used and then Lowe's ratio test is performed
+              to ensure good matches. These matches are displayed in the iamge below<br>
+            </p>
+              <img class="img-fluid" src="images/matches.png" width="50%" alt="Matches">
+            <p class="text-justify">
+                <br><br>
+                Based on the extracted matches an homography is retrieved and this is applied to the right image to
+                warp it in line with the left image.<br>
+            </p>
+              <img class="img-fluid" src="images/homo.png" width="50%" alt="Homography">
+            <p class="text-justify">
+                <br><br>
+                The left image is then added to the warped right image. This will create a very sharp
+                vertical seam line at the right hand edge of the left image. Although in this scenario the 
+                seam line is very minimal, it is very evident in the areas pointed out by the arrows.<br>
+            </p>
+              <img class="img-fluid" src="images/addition.jpeg" width="50%" alt="Image Addition">
+            <p class="text-justify">
+                <br><br>
+                After applying the weighted fusion on the image the seam line in removed and the result is a 
+                blending of the left image and right image.<br>
+            </p>
+              <img class="img-fluid" src="images/seam.png" width="50%" alt="Seam Correction">
+            <p class="text-justify">
+                <br><br>
+                The final step is to fix the corners as a result of the image warped. Applying a simple warp of the image 
+                and moving the corners to the edges fixes this and gives the final image.<br>
+            </p>
+              <img class="img-fluid" src="images/output.png" width="50%" alt="Output">
+              <br><br>
+            </p>
         </div>
       </div>
     </div>
   </section>
   <br>
-
-
-  <!-- ack -->
-  <div class="container">
-    <div class="row ">
-      <div class="col-12">
-          <h3>Acknowledgements</h3>
-          <hr style="margin-top:0px">
-          <p class="text-justify">
-            We would like to specially thank the teaching team for Robot Perception Fall 2022, without whom this project could not have been completed.
-
-            We would like to also thank NYU for graciusly allowing us to utilise the HPC (High performance computing) for executing the training of our models.
-          </p>
-          <hr>
-      </div>
-    </div>
-  </div>
 
   <!-- rec -->
   <!-- <div class="container">
