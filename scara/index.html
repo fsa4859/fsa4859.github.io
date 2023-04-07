@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A fast feature based image stitching algorithm developed in Python"/>
+    <title>Vision based Pose and Velocity Estimation for Microaerial Vehicle</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <style>
+      body {
+        background: #fdfcf9 no-repeat fixed top left;
+        font-family:'Open Sans', sans-serif;
+      }
+    </style>
+
+  </head>
+
+  <!-- cover -->
+  <section>
+    <div class="jumbotron text-center mt-0">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h2>Vision based Pose and Velocity Estimation of Microaerial Vehicle</h2>
+            <!-- <h4 style="color:#6e6e6e;"> Robot Perception (ROB-GY 6203) Fall 2022  </h4> -->
+            <hr>
+            <h6> <a href="https://fsa4859.github.io" target="_blank">Fady Algyar</a><!-- <sup>1</sup> -->, 
+                 
+            <p> <!--<sup>1</sup>-->New York Univeristy &nbsp;&nbsp; 
+            </p>
+            <!-- <p> <a class="btn btn-secondary btn-lg" href="" role="button">Paper</a> 
+                <a class="btn btn-secondary btn-lg" href="" role="button">Code</a> 
+                <a class="btn btn-secondary btn-lg" href="" role="button">Data</a> </p> -->
+
+            <div class="row justify-content-center">
+              <!-- <div class="column">
+                  <p class="mb-5"><a class="btn btn-large btn-light" href="https://arxiv.org/pdf/2104.00680.pdf" role="button"  target="_blank">
+                    <i class="fa fa-file"></i> Paper</a> </p>
+              </div> -->
+              <div class="column">
+                  <p class="mb-5"><a class="btn btn-large btn-light" id="code_soon" href="https://github.com/fsa4859/Implementation-of-3-D-pose-and-velocity-estimator-for-quadrotor-with-April-Tags" role="button" 
+                    target="_blank" disabled=1>
+                <i class="fa fa-github-alt"></i> Code </a> </p>
+              </div>
+              <!-- <div class="column">
+                  <p class="mb-5"><a class="btn btn-large btn-light" href="files/LoFTR-suppmat.pdf" role="button"  target="_blank">
+                    <i class="fa fa-file"></i> Supplementary</a> </p>
+              </div>
+              <div class="column">
+                  <p class="mb-5"><a class="btn btn-large btn-light" href="files/LoFTR_IMC21.pdf" role="button"  target="_blank">
+                    <i class="fa fa-file"></i> IMC-Report </a> </p>
+              </div> -->
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- abstract -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h3>Abstract</h3>
+            <hr style="margin-top:0px">
+            <h6 style="color:#8899a5" class="text-center"> 
+              This is a vision based pose and velocity estimation of microaerial vehicle. Given planar distribution of 
+		  April Tags and corresponding images captured from the drone, the planar homography matrix was formulated
+		  and the homography matrix is decomposed into rotation and translation vector respecting the orthonormality
+		  constraints. To estimate the velocity of the drone as it moves between different frames, interesting points are
+		  detected from the frames and using KLT object tracker, we can estimate the velocity of the features as they move
+		  in different frames. The velocity of the drone can be estimated based on motion model given the velocity of the 				  features and then RANSAC for outlier rejection is then applied. 
+            </h6>
+              <br>
+              <img class="img-fluid" src="images/first_dataset.png" alt="Estimated vs Ground Truth Pose" width="50%" height="50%">
+              <!--<img class="img-fluid" src="images/second_dataset.png" alt="Second Dataset" width="30%" height="30%"> -->
+            <div>
+              <br>
+          <p class="text-justify">
+            The above figure shows the pose estimate from the drone as it moves between different frames based on the homography 			      correspondence and these estimates are plotted against ground truth values obtained from world viz system.    
+          </p>
+          <br>
+          <!--<img class="img-fluid" src="images/stiched.jpg" alt="Right Image" width="50%" height="50%"> -->
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+
+  <!-- pipeline -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            <h3>Process Description</h3>
+            <hr style="margin-top:0px">
+                <!-- <img class="img-fluid" src="images/loftr-arch.png" alt="LoFTR Architechture"> -->
+            <!-- <hr> -->
+            <p class="text-justify">
+              The pipeline of the vision based pose and velocity estimation is explained below.
+
+              <ol>
+			<b class="text-justify">
+			<li> Formulate the correspondencies between the image plane and planar distribution of april tags </li>
+			</b>
+              <br>
+            </p>
+              <img  class="img-fluid" src="images/april_tags.png" alt="Left (Grayscale)" width="50%"> 
+              &nbsp;
+              <!--<img class="img-fluid" src="images/right-bw.png" alt="Right (Grayscale)" width="30%"> -->
+            <b class="text-justify">
+			<li> After formulating the planar homography matrix, Apply SVD and solve for the entries of homography matrix </li>
+</b>
+			</b>
+              <br>
+		<br>
+
+<b class="text-justify">
+			<li> Decompose the Homography matrix into rotation matrix and translation vector respecting the orthornormality constraints of the rotation matrix through non linear based optimization approach </li>
+</b>
+			</b>
+              <br>
+		<br>
+
+<b class="text-justify">
+			<li> Compare the pose estimated from the homography approach versus ground truth data obtained from vicon system on board of the nano++ quadrotor </li>
+</b>
+			</b>
+              <br>
+            </p>
+              <img  class="img-fluid" src="images/first_dataset.png" alt="Left (Grayscale)" width="40%">
+              &nbsp;
+<img class="img-fluid" src="images/second_dataset.png" alt="Right (Grayscale)" width="40%">
+		<br>
+<p class="text-justify">
+Two captured datasets are shown in the left and right image respectively. 
+</p>
+<br>
+<br>
+
+<b class="text-justify">
+			<li> Use <strong>DetectFastFeatures</strong> function in MATLAB to detect the pixel location of the features in the camera frames. </li>
+</b>
+			</b>
+              <br>
+		<br>
+
+
+<b class="text-justify">
+			<li> Use <strong>KLT tracker in MATLAB</strong> to track the position of the features as they move in different frames. Using prior information about the speed of the drone, we can estimate the velocity of the features as they move between different frames  </li>
+</b>
+			</b>
+              <br>
+		<br>
+
+<b class="text-justify">
+			<li> based on selected motion model, we can link the velocity of the features to the velocity of the drones </li>
+</b>
+			</b>
+              <br>
+            </p>
+              <img  class="img-fluid" src="images/velocity_estimation_first.png" alt="Left (Grayscale)" width="40%">
+              &nbsp;
+<img class="img-fluid" src="images/velocity_estimation_second.png" alt="Right (Grayscale)" width="40%">
+		<br>
+<p class="text-justify">
+The Velocity (linear and angular) velocity are shown for both datasets. 
+</p>
+<br>
+<br>
+
+
+
+<b class="text-justify">
+			<li> Applying <strong> RANSAC </strong> to reject outliers and better refine the velocity estimates. </li>
+</b>
+			</b>
+              <br>
+            </p>
+              <img  class="img-fluid" src="images/ransac_first.png" alt="Left (Grayscale)" width="40%">
+              &nbsp;
+<img class="img-fluid" src="images/ransac_second.png" alt="Right (Grayscale)" width="40%">
+		<br>
+<p class="text-justify">
+The filtered velocity estimates are shown for both datasets (left to right respectively). 
+</p>
+<br>
+<br>
+
+
+
+
+            <!--</p>
+              <img class="img-fluid" src="images/matches.png" width="50%" alt="Matches">
+            <p class="text-justify">
+                <br><br>
+                Based on the extracted matches an homography is retrieved and this is applied to the right image to
+                warp it in line with the left image.<br>
+            </p>
+              <img class="img-fluid" src="images/homo.png" width="50%" alt="Homography">
+            <p class="text-justify">
+                <br><br>
+                The left image is then added to the warped right image. This will create a very sharp
+                vertical seam line at the right hand edge of the left image. Although in this scenario the 
+                seam line is very minimal, it is very evident in the areas pointed out by the arrows.<br>
+            </p>
+              <img class="img-fluid" src="images/addition.jpeg" width="50%" alt="Image Addition">
+            <p class="text-justify">
+                <br><br>
+                After applying the weighted fusion on the image the seam line in removed and the result is a 
+                blending of the left image and right image.<br>
+            </p>
+              <img class="img-fluid" src="images/seam.png" width="50%" alt="Seam Correction">
+            <p class="text-justify">
+                <br><br>
+                The final step is to fix the corners as a result of the image warped. Applying a simple warp of the image 
+                and moving the corners to the edges fixes this and gives the final image.<br>
+            </p>
+              <img class="img-fluid" src="images/output.png" width="50%" alt="Output">
+              <br><br>
+            </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+
+  <!-- rec -->
+  <!-- <div class="container">
+    <div class="row ">
+      <div class="col-12">
+          <h3>Recommendations to other works by me</h3>
+          <hr style="margin-top:0px">
+          <p class="text-justify">
+            Welcome to checkout my  (<a href="http://zju3dv.github.io/neuralrecon/">NeuralRecon</a>) and human reconstruction (<a href="http://zju3dv.github.io/neuralbody">NeuralBody</a> and <a href="http://zju3dv.github.io/Mirrored-Human">Mirrored-Human</a>) in CVPR 2021.-->
+          </p>
+      </div>
+    </div>
+  </div> 
+-->
+
+  <footer class="text-center" style="margin-bottom:10px; font-size: medium;">
+      <hr>
+      Thanks to <a href="https://lioryariv.github.io/" target="_blank">Lior Yariv</a> for the <a href="https://lioryariv.github.io/idr/" target="_blank">website template</a>.
+  </footer>
+
+  
+</body>
+</html>
