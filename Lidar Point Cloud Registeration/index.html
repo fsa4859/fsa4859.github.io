@@ -104,19 +104,28 @@
                 <!-- <img class="img-fluid" src="images/loftr-arch.png" alt="LoFTR Architechture"> -->
             <!-- <hr> -->
             <p class="text-justify">
-              The pipeline of the vision based pose and velocity estimation is explained below.
+              The main points and considerations in network developement is shown below. 
 
               <ol>
 			<b class="text-justify">
-			<li> Formulate the correspondencies between the image plane and planar distribution of april tags </li>
+			<li> The project focused on lidar scans with low overlapping regions as this case is not covered
+        in the literature </li>
 			</b>
               <br>
             </p>
-              <img  class="img-fluid" src="images/april_tags.png" alt="Left (Grayscale)" width="50%"> 
+              <img  class="img-fluid" src="images/Picture2.png" alt="Left (Grayscale)" width="50%"> 
               &nbsp;
               <!--<img class="img-fluid" src="images/right-bw.png" alt="Right (Grayscale)" width="30%"> -->
             <b class="text-justify">
-			<li> After formulating the planar homography matrix, Apply SVD and solve for the entries of homography matrix </li>
+			<li> The network is inspired by transformer network by adding transformers at different scales
+        to help extract features at different levels </li>
+    </b>
+    <br>
+  </p>
+    <img  class="img-fluid" src="images/Picture3.png" alt="Left (Grayscale)" width="50%"> 
+    &nbsp;
+    <!--<img class="img-fluid" src="images/right-bw.png" alt="Right (Grayscale)" width="30%"> -->
+  <b class="text-justify">
 </b>
 			</b>
               <br>
